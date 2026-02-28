@@ -1,13 +1,7 @@
-Since you're moving your blog to Jekyll (using .md files in your _posts folder), we need to replace the Firebase JavaScript "loading" logic with Jekyll's "looping" logic.
-
-Here is the complete, updated code for your blogs/index.html. This will automatically grab any .md file you put in your _posts folder and display it on the page.
-
-HTML
 ---
 layout: default
-title: "JZYangg's Blog"
+title: Blog
 ---
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +25,7 @@ title: "JZYangg's Blog"
       {% for post in site.posts %}
         <article class="post-card" style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
           <h2 style="margin-bottom: 5px;">
-            <a href="{{ post.url }}" style="text-decoration: none; color: #333;">{{ post.title }}</a>
+            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #333;">{{ post.title }}</a>
           </h2>
           <p class="post-date" style="color: #888; font-size: 0.9rem;">
             {{ post.date | date: "%B %d, %Y" }}
@@ -41,14 +35,14 @@ title: "JZYangg's Blog"
             {{ post.excerpt }}
           </div>
 
-          <a href="{{ post.url }}" class="read-more-link" style="font-weight: bold; color: #007bff; text-decoration: none;">
+          <a href="{{ post.url | relative_url }}" class="read-more-link" style="font-weight: bold; color: #007bff; text-decoration: none;">
             Read More →
           </a>
         </article>
       {% endfor %}
 
       {% if site.posts.size == 0 %}
-        <p>No posts found yet. Check your _posts folder!</p>
+        <p>No posts found yet. Make sure your folder is named <strong>_posts</strong> and your file starts with a date!</p>
       {% endif %}
     </main>
   </div>
