@@ -1,3 +1,13 @@
+Since you're moving your blog to Jekyll (using .md files in your _posts folder), we need to replace the Firebase JavaScript "loading" logic with Jekyll's "looping" logic.
+
+Here is the complete, updated code for your blogs/index.html. This will automatically grab any .md file you put in your _posts folder and display it on the page.
+
+HTML
+---
+layout: default
+title: "JZYangg's Blog"
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,46 +27,32 @@
       <p class="tagline">Updates, ideas, and personal thoughts from Nothings.</p>
     </header>
 
-    <!-- New Post Button (hidden by default) -->
-    <div style="margin-bottom: 20px;">
-      <a href="newpost.html" id="new-post-btn" class="button" style="display: none;">➕ New Post</a>
-    </div>
+    <main id="blog-list">
+      {% for post in site.posts %}
+        <article class="post-card" style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+          <h2 style="margin-bottom: 5px;">
+            <a href="{{ post.url }}" style="text-decoration: none; color: #333;">{{ post.title }}</a>
+          </h2>
+          <p class="post-date" style="color: #888; font-size: 0.9rem;">
+            {{ post.date | date: "%B %d, %Y" }}
+          </p>
 
-    <main id="blog-list"></main>
+          <div class="excerpt" style="margin: 15px 0;">
+            {{ post.excerpt }}
+          </div>
+
+          <a href="{{ post.url }}" class="read-more-link" style="font-weight: bold; color: #007bff; text-decoration: none;">
+            Read More →
+          </a>
+        </article>
+      {% endfor %}
+
+      {% if site.posts.size == 0 %}
+        <p>No posts found yet. Check your _posts folder!</p>
+      {% endif %}
+    </main>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <!-- Show New Post Button for Admins -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
-      authDomain: "nthlikeyou-68278.firebaseapp.com",
-      projectId: "nthlikeyou-68278",
-      storageBucket: "nthlikeyou-68278.appspot.com", // ✅ correct
-    };
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (!user) return;
-      try {
-        const doc = await firebase.firestore().collection("users").doc(user.uid).get();
-        if (doc.exists && doc.data().admin) {
-          document.getElementById("new-post-btn").style.display = "inline-block";
-        }
-      } catch (err) {
-        console.error("Error checking admin:", err);
-      }
-    });
-  </script>
-
-  <script src="blog.js" defer></script>
   <script src="/userbar.js" defer></script>
 </body>
 </html>
