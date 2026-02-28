@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | JZYangg</title>
+    <link rel="stylesheet" href="/blogs/blogs.css">
     <link rel="stylesheet" href="/navbar.css">
-    <link rel="stylesheet" href="/index.css">
-    {% if page.css %}<link rel="stylesheet" href="/{{ page.css }}">{% endif %}
 </head>
-<body class="{{ page.body_class }}">
+<body>
     <div id="navbar-placeholder"></div>
     <script src="/navbar.js" defer></script>
 
-    {{ content }}
+    <div class="main-wrapper">
+        {{ content }}
+    </div>
 
+    <script src="/userbar.js" defer></script>
 </body>
 </html>
