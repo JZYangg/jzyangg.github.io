@@ -1,0 +1,110 @@
+/* ==================== UPDATED NAVBAR ==================== */
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 25px;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.nav-title {
+    font-weight: 700; /* Made slightly bolder for 2026 feel */
+    font-size: 1.1rem;
+    color: #0f172a;
+}
+
+/* FIX: This forces everything to stay on one line */
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    white-space: nowrap; /* Prevents text from breaking */
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #0077cc;
+}
+
+/* Fix for the active state border */
+.nav-links a.active {
+    font-weight: 700;
+}
+
+#user-display {
+    margin-left: 15px;
+    display: flex; /* Keeping it in the flex flow */
+    align-items: center;
+}
+
+/* ==================== THEME TOGGLE ==================== */
+.theme-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-left: 15px; /* Space from the last nav item */
+    outline: none;
+}
+
+.theme-btn .icon-sun { display: none; }
+.theme-btn .icon-moon { display: block; }
+
+/* ==================== DARK MODE OVERRIDES ==================== */
+body.dark-mode .topnav {
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+}
+
+body.dark-mode .nav-title,
+body.dark-mode .nav-links a {
+    color: #f1f5f9;
+}
+
+body.dark-mode .nav-links a:hover,
+body.dark-mode .nav-links a.active {
+    color: #5865F2; /* Discord Blue accent in dark mode */
+}
+
+body.dark-mode .theme-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .theme-btn .icon-sun { display: block; }
+body.dark-mode .theme-btn .icon-moon { display: none; }
+
+body.dark-mode {
+    background: #0f172a;
+    color: #f1f5f9;
+}
+
+body.dark-mode .hero-card, 
+body.dark-mode .bento-card {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+body.dark-mode .modern-list li {
+    background: #0f172a; /* Slightly darker for contrast inside cards */
+    border-color: #334155;
+    color: #cbd5e1;
+}

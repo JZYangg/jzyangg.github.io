@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JZYangg's Blog</title>
+  <link rel="stylesheet" href="blogs.css" />
+  <link rel="stylesheet" href="../navbar.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/navbar.js" defer></script>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container fade-in">
+    <header>
+      <h1>📝 Blog Posts</h1>
+      <p class="tagline">Updates, ideas, and personal thoughts from Nothings.</p>
+    </header>
+
+    <!-- New Post Button (hidden by default) -->
+    <div style="margin-bottom: 20px;">
+      <a href="newpost.html" id="new-post-btn" class="button" style="display: none;">➕ New Post</a>
+    </div>
+
+    <main id="blog-list"></main>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Show New Post Button for Admins -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
+      authDomain: "nthlikeyou-68278.firebaseapp.com",
+      projectId: "nthlikeyou-68278",
+      storageBucket: "nthlikeyou-68278.appspot.com", // ✅ correct
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (!user) return;
+      try {
+        const doc = await firebase.firestore().collection("users").doc(user.uid).get();
+        if (doc.exists && doc.data().admin) {
+          document.getElementById("new-post-btn").style.display = "inline-block";
+        }
+      } catch (err) {
+        console.error("Error checking admin:", err);
+      }
+    });
+  </script>
+
+  <script src="blog.js" defer></script>
+  <script src="/userbar.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create New Post</title>
+  <link rel="stylesheet" href="blogs.css" />
+  <link rel="stylesheet" href="../navbar.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/navbar.js" defer></script>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container fade-in">
+    <h1>📤 New Blog Post</h1>
+
+    <form id="post-form" style="display:none;" enctype="multipart/form-data">
+      <input type="text" id="title" placeholder="Post Title" required /><br><br>
+      <input type="date" id="date" required /><br><br>
+      <textarea id="content" placeholder="Write your post here..." rows="10" required></textarea><br><br>
+      <input type="file" id="image" accept="image/*" /><br><br>
+      <button type="submit">Publish</button>
+    </form>
+
+    <p id="access-msg">Checking permissions...</p>
+    <button id="logout-btn" style="margin-top: 20px;">Logout</button>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
+      authDomain: "nthlikeyou-68278.firebaseapp.com",
+      projectId: "nthlikeyou-68278",
+      storageBucket: "nthlikeyou-68278.appspot.com"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+
+    const form = document.getElementById('post-form');
+    const msg = document.getElementById('access-msg');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        alert("Login required.");
+        window.location.href = "../login.html";
+        return;
+      }
+
+      try {
+        const doc = await db.collection("users").doc(user.uid).get();
+        const data = doc.data();
+
+        if (!data || !data.admin) {
+          msg.textContent = "Access denied. Admins only.";
+          form.style.display = "none";
+          return;
+        }
+
+        msg.style.display = "none";
+        form.style.display = "block";
+      } catch (err) {
+        console.error("Error checking admin:", err);
+        msg.textContent = "Error verifying permissions.";
+      }
+    });
+
+      form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const date = document.getElementById('date').value;
+    const content = document.getElementById('content').value;
+    const imageFile = document.getElementById('image').files[0];
+    let imageUrl = "";
+
+    try {
+      if (imageFile && imageFile.type.startsWith("image/")) {
+        const fileName = `${Date.now()}_${imageFile.name}`;
+        const storageRef = storage.ref().child(`images/${fileName}`);
+        const snapshot = await storageRef.put(imageFile);
+        imageUrl = await snapshot.ref.getDownloadURL();
+      }
+
+      await db.collection("posts").add({
+        title,
+        date,
+        content,
+        imageUrl,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert("Post published!");
+      form.reset();
+    } catch (err) {
+      console.error("Error publishing post:", err);
+      alert("Error publishing post. Check the console.");
+    }
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    auth.signOut().then(() => window.location.href = "../index.html");
+  });
+  </script>
+
+  <script src="/userbar.js" defer></script>
+</body>
+</html>

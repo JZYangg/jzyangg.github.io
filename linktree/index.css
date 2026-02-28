@@ -1,0 +1,146 @@
+/* ==================== LINKTREE BENTO STYLES ==================== */
+
+/* Container Setup */
+.linktree-page {
+    background: #ffffff;
+    transition: background 0.3s ease;
+}
+
+.linktree-grid {
+    max-width: 550px; /* Slimmer profile for mobile-first link sharing */
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two-column bento grid */
+    gap: 16px;
+    padding: 0 20px;
+}
+
+/* Header Card (Spans both columns) */
+.linktree-header {
+    grid-column: span 2;
+    text-align: center;
+    background: white;
+    padding: 40px 20px;
+    border-radius: 32px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+}
+
+.linktree-header .profile-glow {
+    width: 90px;
+    height: 90px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.linktree-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+.linktree-header h1 span { color: #5865F2; }
+
+/* Toggle background */
+.linktree-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    margin: 0;
+    background: rgba(0,0,0,0.05);
+    border: 1px soild rgba(0,0,0,0.1);
+}
+
+body.dark-mode .linktree-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ensure icons show/hide correctly on linktree page */
+.linktree-toggle .icon-sun { display: none; }
+.linktree-toggle .icon-moon { display: block; }
+
+body.dark-mode .linktree-toggle .icon-sun { display: block; }
+body.dark-mode .linktree-toggle .icon-moon { display: none; }
+
+/* Interactive Link Tiles */
+.social-tile {
+    text-decoration: none;
+    background: white;
+    border: 1px solid #f1f5f9;
+    border-radius: 24px;
+    padding: 24px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.social-tile:hover {
+    transform: translateY(-5px);
+    border-color: #5865F2;
+    box-shadow: 0 12px 20px rgba(88, 101, 242, 0.1);
+}
+
+.social-tile .icon {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}
+
+.social-tile h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.social-tile p {
+    margin: 5px 0 0;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* ==================== LINKTREE FOOTER ==================== */
+footer {
+    width: 100%;
+    text-align: center; /* Centers the text */
+    padding: 40px 0;
+    margin-top: 20px;
+}
+
+/* ==================== DARK MODE SUPPORT ==================== */
+body.dark-mode.linktree-page {
+    background: #0f172a;
+}
+
+body.dark-mode .linktree-header,
+body.dark-mode .social-tile {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .linktree-header h1,
+body.dark-mode .social-tile h3 {
+    color: #ffffff;
+}
+
+body.dark-mode .linktree-header p {
+    color: #ffffff;
+}
+
+body.dark-mode .social-tile:hover {
+    border-color: #5865F2;
+    background: #1e293b;
+}
+
+/* ==================== MOBILE OPTIMIZATION ==================== */
+@media (max-width: 500px) {
+    .linktree-grid {
+        grid-template-columns: 1fr; /* Stack into single column on phones */
+    }
+    .linktree-header {
+        grid-column: span 1;
+    }
+}

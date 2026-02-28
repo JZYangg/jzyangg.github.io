@@ -1,0 +1,6 @@
+title: JZYangg
+baseurl: ""
+url: "https://jzyangg.github.io"
+
+include: [_pages, _posts, _layouts]
+markdown: kramdown

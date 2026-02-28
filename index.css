@@ -1,0 +1,185 @@
+/* ==================== 1. CORE STYLING ==================== */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f8fafc; 
+  color: #1e293b;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Center the whole Bento block */
+.bento-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* change the background */
+body, .hero-card, .bento-card, .partner-pill, .modern-list li {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Ensure the H1 turns white in Dark Mode */
+body.dark-mode .hero-text h1 {
+  color: #ffffff !important;
+}
+
+/* Optional: Make the tagline a softer white/grey so it doesn't look too harsh */
+body.dark-mode .hero-text .tagline {
+  color: #94a3b8;
+}
+
+/* ==================== 2. HERO / HEADER ==================== */
+.hero-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 32px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 24px;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.profile-glow {
+  width: 120px;
+  height: 120px;
+  border-radius: 40px; /* Squircle */
+  object-fit: cover;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.hero-text h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.hero-text h1 span { color: #5865F2; }
+
+.tagline {
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+/* ==================== 3. DISCORD PARTNER PILL ==================== */
+.partner-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: url('https://media.discordapp.net/attachments/1305362001102372895/1326298665324908724/Untitled12_20250107151007.jpg?ex=684e8fa3&is=684d3e23&hm=d2df9e56f57f95815180c8f0eeaec2f018a249488ae26e9880e80ea5469c3eca&=&format=webp&width=922&height=370') no-repeat center center;
+  background-size: cover;
+  height: 160px;
+  border-radius: 24px;
+  padding: 0 30px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.partner-pill .partner-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 10px 18px;
+  border-radius: 16px;
+  color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mini-icon { width: 36px; height: 36px; border-radius: 8px; }
+
+.glass-btn {
+  background-color: #5865F2;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+  background-color: #4752C4;
+  transform: translateY(-2px);
+}
+
+/* ==================== 4. THE BENTO GRID LAYOUT ==================== */
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr; /* Left side wider than right */
+  gap: 24px;
+}
+
+/* Horizontal split for Topics & Roadmap */
+.main-feed {
+  display: flex;
+  gap: 20px;
+}
+
+.bento-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 28px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  flex: 1; /* Makes them side-by-side */
+}
+
+/* Modern List Styling */
+.modern-list {
+  list-style: none;
+  padding: 0;
+}
+
+.modern-list li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: #fdfdfd;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.2s ease;
+}
+
+.modern-list li:hover {
+  border-color: #5865F2;
+  transform: translateX(4px);
+}
+
+/* Sidebar stacking */
+.side-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ==================== 5. FOOTER & MISC ==================== */
+footer {
+  text-align: center;
+  padding: 40px 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* ==================== 6. RESPONSIVE ==================== */
+@media (max-width: 950px) {
+  .main-feed { flex-direction: column; }
+  .grid-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .hero-content { flex-direction: column; text-align: center; }
+}
