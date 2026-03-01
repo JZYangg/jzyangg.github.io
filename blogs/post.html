@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nothing's Blog Post</title>
+  <link rel="stylesheet" href="blogs.css" />
+  <link rel="stylesheet" href="../navbar.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/navbar.js" defer></script>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container fade-in">
+    <article id="post-content"></article>
+
+    <section>
+      <h3>Comments</h3>
+      <form id="comment-form">
+        <textarea id="comment-text" placeholder="Write a comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+      </form>
+      <div id="comments"></div>
+    </section>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
+        authDomain: "nthlikeyou-68278.firebaseapp.com",
+        projectId: "nthlikeyou-68278"
+      // other config...
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+
+    const postEl = document.getElementById("post-content");
+    const commentsEl = document.getElementById("comments");
+    const commentForm = document.getElementById("comment-form");
+
+    // Load post
+    db.collection("posts").doc(id).get().then(doc => {
+      const post = doc.data();
+      postEl.innerHTML = `
+        <h2>${post.title}</h2>
+        <p class="date">${post.date}</p>
+        <p>${post.content}</p>
+      `;
+    });
+
+    // Load comments
+    db.collection("posts").doc(id).collection("comments").orderBy("timestamp").onSnapshot(snapshot => {
+      commentsEl.innerHTML = '';
+      snapshot.forEach(doc => {
+        const c = doc.data();
+        const div = document.createElement('div');
+        div.innerHTML = `<p><strong>${c.name || 'Anonymous'}:</strong> ${c.text}</p>`;
+        commentsEl.appendChild(div);
+      });
+    });
+
+    // Submit comment
+    commentForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const text = document.getElementById('comment-text').value;
+      db.collection("posts").doc(id).collection("comments").add({
+        text,
+        name: "Guest",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      commentForm.reset();
+    });
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="/userbar.js" defer></script>
+</body>
+</html>
