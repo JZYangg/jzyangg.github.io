@@ -86,9 +86,10 @@
                     'iv_load_policy': 3,
                     'playsinline': 1,
                     'enablejsapi': 1
-},
+                },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange // Added to intercept the pause behavior
                 }
             });
         }
@@ -105,13 +106,21 @@
                 if (player.isMuted()) {
                     player.unMute();
                     muteIcon.style.display = 'none';
-                    unmuteIcon.style.display = 'block';
+                    unMuteIcon.style.display = 'block';
                 } else {
                     player.mute();
                     muteIcon.style.display = 'block';
-                    unmuteIcon.style.display = 'none';
+                    unMuteIcon.style.display = 'none';
                 }
             });
+        }
+
+        // --- Fix: Force the video to keep playing when links are clicked ---
+        function onPlayerStateChange(event) {
+            // YT.PlayerState.PAUSED is 2. If it drops into pause mode, override it.
+            if (event.data === YT.PlayerState.PAUSED) {
+                player.playVideo();
+            }
         }
 
         document.addEventListener("DOMContentLoaded", () => {
