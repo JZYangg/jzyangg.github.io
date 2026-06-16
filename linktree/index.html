@@ -11,12 +11,13 @@
     <div class="floating-dots-container" id="dotsContainer"></div>
 
     <div class="audio-control-group">
-    <button id="volume-toggle" class="audio-btn linktree-audio-btn" aria-label="Toggle Volume">
-        <span class="icon-mute">🔇</span>
-        <span class="icon-unmute" style="display: none;">🔊</span>
-    </button>
         <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100" aria-label="Volume Slider">
+        <button id="volume-toggle" class="audio-btn linktree-audio-btn" aria-label="Toggle Volume">
+            <span class="icon-mute">🔇</span>
+            <span class="icon-unmute" style="display: none;">🔊</span>
+        </button>
     </div>
+    
     <div class="video-background">
         <div id="bgVideo"></div>
     </div>
@@ -80,8 +81,9 @@
                 videoId: 'yKItFB_HPhE',
                 playerVars: {
                     'autoplay': 1,
+                    'mute': 1,
                     'loop': 1,
-                    'playlist': 'yKItFB_HPhE', // Required for looping single videos
+                    'playlist': 'yKItFB_HPhE', 
                     'controls': 0,
                     'showinfo': 0,
                     'rel': 0,
@@ -92,7 +94,7 @@
                 },
                 events: {
                     'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange // Added to intercept the pause behavior
+                    'onStateChange': onPlayerStateChange 
                 }
             });
         }
@@ -100,7 +102,6 @@
         function onPlayerReady(event) {
             event.target.playVideo();
             
-            // Audio Toggle Implementation connected directly to the YouTube API stream
             const volumeBtn = document.getElementById('volume-toggle');
             const muteIcon = volumeBtn.querySelector('.icon-mute');
             const unmuteIcon = volumeBtn.querySelector('.icon-unmute');
@@ -116,14 +117,14 @@
                     volumeSlider.value = lastVolume;
 
                     muteIcon.style.display = 'none';
-                    unMuteIcon.style.display = 'block';
+                    unmuteIcon.style.display = 'block';
                 } else {
                     lastVolume = player.getVolume();
                     player.mute();
                     volumeSlider.value = 0;
 
                     muteIcon.style.display = 'block';
-                    unMuteIcon.style.display = 'none';
+                    unmuteIcon.style.display = 'none';
                 }
             });
 
@@ -131,7 +132,8 @@
                 const vol = parseInt(e.target.value);
                 player.setVolume(vol);
 
-                if(player == 0) {
+                // FIX: Changed from 'player == 0' to 'vol === 0'
+                if (vol === 0) {
                     player.mute();
                     muteIcon.style.display = 'block';
                     unmuteIcon.style.display = 'none';
@@ -141,14 +143,12 @@
                     }
                     lastVolume = vol;
                     muteIcon.style.display = 'none';
-                    unmuteIcon.style.display = 'block';
+                    unmuteIcon.style.display = 'block'; // FIX: Removed camelCase variable typo here
                 }
             });
         }
 
-        // --- Fix: Force the video to keep playing when links are clicked ---
         function onPlayerStateChange(event) {
-            // YT.PlayerState.PAUSED is 2. If it drops into pause mode, override it.
             if (event.data === YT.PlayerState.PAUSED) {
                 player.playVideo();
             }
