@@ -1,0 +1,67 @@
+/* Body Styles */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+    color: #333;
+    min-height: 100vh;
+  }
+  
+  h1,
+  .tagline {
+    text-align: center;
+  }
+  /* end of body */
+
+  /* Toggle Section */
+  .toggle-section {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  #toggleButton {
+    background: #0077cc;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 10px;
+  }
+  
+  #toggleButton:hover {
+    background: #005fa3;
+  }
+  /* end of toggle */
+
+  /* Monitor List */
+  #monitorList {
+    list-style: none;
+    padding: 0;
+    font-size: 1em;
+    line-height: 1.8;
+    transition: all 0.3s ease;
+  }
+  
+  #monitorList li::before {
+    content: "•";
+    color: #4a90e2;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  
+  #monitorList.hidden {
+    display: none;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+  }
+  /* end of monitor */

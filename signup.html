@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="login.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <div class="container">
+    <h1>Create an Account</h1>
+    <form id="signup-form">
+      <input type="text" id="signup-username" placeholder="Username" required />
+      <input type="email" id="signup-email" placeholder="Email" required />
+      <input type="password" id="signup-password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Log in</a></p>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
+      authDomain: "nthlikeyou-68278.firebaseapp.com",
+      projectId: "nthlikeyou-68278",
+      storageBucket: "nthlikeyou-68278.appspot.com"
+    };
+
+    // Initialize Firebase only once
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const signupForm = document.getElementById("signup-form");
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("signup-username").value.trim().toLowerCase();
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+
+      try {
+        console.log("⏳ Creating account...");
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
+        const uid = cred.user.uid;
+        console.log("✅ Firebase Auth account created. UID:", uid);
+
+        // Refresh token to ensure access to Firestore
+        await cred.user.getIdToken(true);
+
+        // Write user profile to Firestore
+        await db.collection("users").doc(uid).set({
+          username,
+          email,
+          admin: false,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Check for existing username
+        const snapshot = await db.collection("users").where("username", "==", username).limit(1).get();
+        if (!snapshot.empty) {
+          alert("⚠️ Username already taken.");
+          await cred.user.delete();
+          return;
+        }
+
+        alert("✅ Account created! Redirecting...");
+        window.location.href = "index.html";
+
+      } catch (err) {
+        console.error("❌ Signup error:", err);
+        alert("Error: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

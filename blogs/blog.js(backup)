@@ -1,0 +1,56 @@
+// Load blog posts from posts.json (fallback or for testing)
+fetch('posts.json')
+  .then(response => response.json())
+  .then(posts => {
+    const blogList = document.getElementById('blog-list');
+    posts.forEach(post => {
+      const article = document.createElement('article');
+      article.className = 'post';
+      article.innerHTML = `
+        <h2>${post.title}</h2>
+        <p class="date">${post.date}</p>
+        <p>${post.content}</p>
+      `;
+      blogList.appendChild(article);
+    });
+  })
+  .catch(err => {
+    console.error('Failed to load local posts.json:', err);
+  });
+
+
+// Firebase setup (separate logic)
+const firebaseConfig = {
+  apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
+  authDomain: "nthlikeyou-68278.firebaseapp.com",
+  projectId: "nthlikeyou-68278",
+  storageBucket: "nthlikeyou-68278.firebasestorage.app",
+  messagingSenderId: "393543536358",
+  appId: "1:393543536358:web:5855e5a8a05f70cbe03527",
+  measurementId: "G-2E0DDGG2R0"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Load blog posts from Firebase
+db.collection("posts").orderBy("date", "desc").get()
+  .then(snapshot => {
+    const blogList = document.getElementById('blog-list');
+    blogList.innerHTML = ''; // Clear posts.json content if both are loaded
+    snapshot.forEach(doc => {
+      const post = doc.data();
+      const article = document.createElement('article');
+      article.className = 'post';
+      article.innerHTML = `
+        <h2>${post.title}</h2>
+        <p class="date">${post.date}</p>
+        <p>${post.content}</p>
+      `;
+      blogList.appendChild(article);
+    });
+  })
+  .catch(err => {
+    console.error("Failed to load Firebase posts:", err);
+  });

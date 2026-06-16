@@ -1,0 +1,50 @@
+---
+layout: default
+title: Guides
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JZYangg's Guides</title>
+  <link rel="stylesheet" href="/blogs/blogs.css" />
+  <link rel="stylesheet" href="/navbar.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/navbar.js" defer></script>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container fade-in">
+    <header>
+      <h1>🛠️ Tech & Troubleshooting Guides</h1>
+      <p class="tagline">Quick fixes, documentation, and walkthroughs.</p>
+    </header>
+
+    <main id="guides-list">
+      {% for post in site.categories.guides %}
+        <article class="post-card" style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+          <h2 style="margin-bottom: 5px;">
+            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #333;">{{ post.title }}</a>
+          </h2>
+          <p class="post-date" style="color: #888; font-size: 0.9rem;">
+            {{ post.date | date: "%B %d, %Y" }}
+          </p>
+
+          <div class="excerpt" style="margin: 15px 0;">
+            {{ post.excerpt }}
+          </div>
+
+          <a href="{{ post.url | relative_url }}" class="read-more-link" style="font-weight: bold; color: #007bff; text-decoration: none;">
+            Read Guide →
+          </a>
+        </article>
+      {% endfor %}
+
+      {% if site.categories.guides.size == 0 or site.categories.guides == nil %}
+        <p>No guides found yet. Make sure your markdown files have <strong>category: guides</strong> in the front matter!</p>
+      {% endif %}
+    </main>
+  </div>
+</body>
+</html>

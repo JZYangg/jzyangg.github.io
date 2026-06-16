@@ -1,0 +1,50 @@
+---
+layout: default
+title: Blog
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JZYangg's Blog</title>
+  <link rel="stylesheet" href="blogs.css" />
+  <link rel="stylesheet" href="/navbar.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/navbar.js" defer></script>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container fade-in">
+    <header>
+      <h1>📝 Blog Posts</h1>
+      <p class="tagline">Updates, ideas, and personal thoughts from Nothings.</p>
+    </header>
+
+    <main id="blog-list">
+      {% for post in site.categories.blogs %}
+        <article class="post-card" style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+          <h2 style="margin-bottom: 5px;">
+            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #333;">{{ post.title }}</a>
+          </h2>
+          <p class="post-date" style="color: #888; font-size: 0.9rem;">
+            {{ post.date | date: "%B %d, %Y" }}
+          </p>
+
+          <div class="excerpt" style="margin: 15px 0;">
+            {{ post.excerpt }}
+          </div>
+
+          <a href="{{ post.url | relative_url }}" class="read-more-link" style="font-weight: bold; color: #007bff; text-decoration: none;">
+            Read More →
+          </a>
+        </article>
+      {% endfor %}
+
+      {% if site.categories.blogs.size == 0 or site.categories.blogs == nil %}
+        <p>No posts found yet. Make sure your folder is named <strong>_posts</strong> and your file starts with a date!</p>
+      {% endif %}
+    </main>
+  </div>
+</body>
+</html>

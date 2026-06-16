@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="login.css" />
+
+<div class="container">
+  <form id="login-form">
+    <input type="text" id="login-id" placeholder="Username or Email" required />
+    <input type="password" id="login-password" placeholder="Password" required />
+    <div class="button-row">
+      <button type="submit">Login</button>
+      <button type="button" id="google-login">Login with Google</button>
+    </div>
+  </form>
+
+  <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+
+  <form id="post-form" style="display:none;">
+    <!-- Your blog post form here -->
+  </form>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyARyRD0lCfzU8oQLAUU9tUr_YrGjirgTdg",
+    authDomain: "nthlikeyou-68278.firebaseapp.com",
+    projectId: "nthlikeyou-68278"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const auth = firebase.auth();
+
+  const loginForm = document.getElementById('login-form');
+  const googleBtn = document.getElementById('google-login');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('login-id').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    try {
+      // Try login with email first
+      await auth.signInWithEmailAndPassword(id, password);
+      window.location.href = "/index.html";
+    } catch (err) {
+      console.error("Login error:", err.message);
+      alert("Invalid login. Check your credentials.");
+    }
+  });
+
+  googleBtn.addEventListener('click', async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      await auth.signInWithPopup(provider);
+      window.location.href = "/index.html";
+    } catch (err) {
+      console.error("Google login error:", err.message);
+      alert("Google login failed.");
+    }
+  });
+</script>

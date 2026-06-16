@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix Valorant Crashing on Alt-Tab (Stretched Resolution) | JZYangg</title>
+    <link rel="stylesheet" href="/blogs/blogs.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <script src="/navbar.js" defer></script>
+
+    <div class="main-wrapper">
+        <article class="post-content" style="max-width: 800px; margin: 50px auto; padding: 0 20px;">
+    <h1>How to Fix Valorant Crashing on Alt-Tab (Stretched Resolution)</h1>
+    <p style="color: gray;">June  4, 2026</p>
+    <hr>
+    
+    <p>Do you or your friends play Valorant on a custom stretched resolution, you’ve probably dealt with the annoying issue where the game completely freezes or crashes the moment you Alt-Tab to check Discord or change a song.</p>
+
+<p>Here is exactly how to fix it so you can Alt-Tab smoothly without ruining your competitive matches.</p>
+
+<h2 id="the-fix-gpu-scaling--fullscreen-optimizations">The Fix: GPU Scaling &amp; Fullscreen Optimizations</h2>
+
+<p>The crash happens because Windows and your graphics driver are fighting over who handles the resolution stretch when the game loses focus and this espeically happens when your monitor is not set the resolution that you are using in valorant.</p>
+
+<p>Depending on your experiences this guide won’t be any help for you because either you are using different methods or you guys are using different GPU or you are facing an whole another different issue then what this guide is made for.</p>
+
+<p><strong>ALSO MAKE SURE AND CHECK YOUR DRIVERS IS UP-TO-DATE, IF NOT UPDATE YOUR DRIVERS BEFORE YOU FOLLOW THIS GUIDE</strong></p>
+
+<h3 id="valorant-config-method"><strong>(VALORANT CONFIG METHOD)</strong></h3>
+
+<h3 id="step-1-deleterefresh-valorant-config-files">Step 1: Delete/Refresh Valorant Config Files</h3>
+<p>Sometimes, your valorant config files can be broken or corrupted which causes the crashes. First, we would need to head to the config folder for valorant at <strong>C:\Users\USERNAME\AppData\Local\VALORANT\Saved\Config</strong> <img src="/assets/Guides/2026-06-04%20How%20to%20fix%20valorant%20crashes%20on%20stretch%20res/config%20folder.png" alt="Valorant Config Folder" width="100%" /></p>
+
+<p>Then click the <strong>WindowsClient</strong> folder then click on <strong>RiotLocalMachine.ini</strong> and find the folder with the same first 8 characters <img src="/assets/Guides/2026-06-04 How to fix valorant crashes on stretch res/RiotLocalMachine.png" width="100%" /></p>
+
+<p>Then back out and find the folder that you just got from the <strong>RiotLocalMachine.ini</strong>, as soon you found the folder that you saw in <strong>RiotLocalMachine.ini</strong>.</p>
+
+<p><strong>At the end of the folder name it will show your region that the account is based in</strong> <img src="/assets/Guides/2026-06-04 How to fix valorant crashes on stretch res/config folder pt.2.png" width="100%" /></p>
+
+<p>When clicking on the folder you, go to <strong>WindowsClient</strong> folder and you would want to delete <strong>GameUserSettings.ini</strong> from the folder. After that, go open valorant so it could create a new <strong>GameUserSettings.ini</strong> file, close valorant and go back to the folder again and reopen <strong>GameUserSettings.ini</strong> and locate <strong>ResolutionSizeX and ResolutionSizeY</strong> <img src="/assets/Guides/2026-06-04 How to fix valorant crashes on stretch res/GameUserSetting part 1.png" width="100%" /> and change it to your desired resolution. At the very bottom of right under <strong>HDRDisplayOutputNits=1000</strong> add <strong>Fullscreenmode=2</strong> <img src="/assets/Guides/2026-06-04 How to fix valorant crashes on stretch res/GameUserSetting part 2.png" width="100%" /></p>
+
+<h3 id="step-2-force-gpu-scaling-amd-or-nvidia">Step 2: Force GPU Scaling (AMD or NVIDIA)</h3>
+<p>Instead of letting your monitor handle the stretching, force your graphics card to do the heavy lifting.</p>
+
+<ul>
+  <li><strong>For NVIDIA Users:</strong> Open NVIDIA Control Panel -&gt; Go to <em>Adjust desktop size and position</em> -&gt; Set scaling mode to <strong>Aspect Ratio</strong> or <strong>Full-screen</strong> -&gt; Set “Perform scaling on:” to <strong>GPU</strong>. Check the box for “Override the scaling mode set by games and programs.”</li>
+  <li><strong>For AMD Users:</strong> Open AMD Software -&gt; Go to Gaming -&gt; Graphics -&gt; Global Display -&gt; Turn on <strong>GPU Scaling</strong> and set Scaling Mode to <strong>Full panel</strong>.</li>
+</ul>
+
+<h3 id="step-3-disable-fullscreen-optimizations">Step 3: Disable Fullscreen Optimizations</h3>
+<p>Windows has a built-in feature that tries to blend borderless and exclusive fullscreen, which completely breaks stretched resolutions on an Alt-Tab.</p>
+
+<ol>
+  <li>Right-click your <strong>Valorant</strong> desktop shortcut (or navigate to the actual <code class="language-plaintext highlighter-rouge">VALORANT-Win64-Shipping.exe</code> file in your Riot Games folder).</li>
+  <li>Go to <strong>Properties</strong> and click the <strong>Compatibility</strong> tab.</li>
+  <li>Check the box that says <strong>“Disable fullscreen optimizations.”</strong>
+<img src="/assets/Guides/2026-06-04 How to fix valorant crashes on stretch res/desktop valorant settings 1.png" width="60%" /></li>
+  <li>Click <strong>Apply</strong> and then <strong>OK</strong>.</li>
+</ol>
+
+<h3 id="disable-monitor-method"><strong>(DISABLE MONITOR METHOD)</strong></h3>
+<p><strong>COMING SOON</strong></p>
+
+
+    <div style="margin-top: 50px;">
+        <a href="/blogs">← Back to Blog List</a>
+    </div>
+</article>
+    </div>
+
+    <script src="/userbar.js" defer></script>
+</body>
+</html>
